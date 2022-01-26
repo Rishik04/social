@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/home.css" />
+    <script
+      src="https://kit.fontawesome.com/e32d5f4f68.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+    <title>Login</title>
+  </head>
+
+  <body>
+    <div class="container" id="post">
+      <div class="row mx-auto">
+        <% for(let i=0;i<allpost.length;i++){ %>
+        <div class="col-lg-4 mt-3 mx-auto">
+          <div class="card">
+            <h1>
+              <%= allpost[i].caption %>
+            </h1>
+            <div class="row">
+              <div class="col-lg-7">
+                <h2>
+                  <%= allpost[i].user.name  %>
+                </h2>
+              </div>
+              <div class="col-lg-5" id="del">
+                <button type="submit">Del</button>
+              </div>
+            </div>
+           
+          </div>
+        </div>
+        <% } %>
+      </div>
+
+      <form class="form-group mt-3 pt-4" id="form">
+        <textarea name="caption" id="cap" cols="10" rows="5" class="form-control" placeholder="Write Your Post Here"></textarea>
+        <!-- <input type="image"  > -->
+        <div class="text-center mt-3">
+          <button type="submit">Post</button>
+        </div>
+      </form>
+    </div>
+
+
+    <script>
+      $(document).ready(()=>{
+        $('#form').submit((e)=>{
+          e.preventDefault();
+
+const form=$('#form').serialize();
+console.log(form)
+
+          $.ajax({
+            method: "Post",
+            url: '/post/addpost',
+            data: form,
+            headers:{
+              'auth-header': localStorage.getItem('token')
+            },
+            success: function(res){
+              $('#post').load('/post')
+            }
+          })
+        })
+      })
+    </script>
+
+  </body>
+</html>
