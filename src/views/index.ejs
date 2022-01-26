@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      
+    ></script>
+    <script
+      src="https://kit.fontawesome.com/e32d5f4f68.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Login</title>
+  </head>
+
+  <body>
+    <section id="login">
+      <div class="container pt-4 justify-content-center">
+        <div class="card">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 mt-2 pt-2">
+                <h2>Hey Welcome Back</h2>
+                <p class="content_left">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Maxime accusamus minus sed pariatur.
+                </p>
+                <p id="emsg" style="color: white; font-size: 25px; font-weight: 800; background-color: red; border-radius: 1rem;" class="d-inline-block px-3"></p>
+                <div class="login_1">
+                  <h6>Login With Social Media</h6>
+                  <a href="#" class="px-1 py-2"
+                    ><span> </span><i class="fab fa-facebook"></i
+                  ></a>
+                  <a href="#" class="px-1 py-2"
+                    ><span> </span><i class="fab fa-google"></i
+                  ></a>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 mt-2 pt-2">
+                <h1>Login</h1>
+                <p class="content_right">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit minus
+                  sed pariatur.
+                </p>
+
+                <form id="form">
+                <div class="form-group mt-2">
+                  <input
+                    type="email"
+                    class="detail"
+                    placeholder="Email"
+                    name="email"
+                    id="email"
+                  />
+                </div>
+                <div class="form-group mt-4">
+                  <input
+                    type="password"
+                    class="detail"
+                    placeholder="Password"
+                    name="password"
+                    id="pass"
+                  />
+                </div>
+                <div class="form-group form-check">
+                  <label class="form-check-label">
+                    <input
+                      class="form-check-input d-inline"
+                      type="checkbox"
+                    />Remember me
+                  </label>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6 col-sm-6 col-xs-6">
+                    <button class="btn btn-default" id="loginbt">Login</button>
+                  </div>
+                  <div class="col-lg-6 col-sm-6 col-xs-6 mt-4">
+                    <a href="/user/register" class="new_acc pt-4 mb-4"
+                      >Create a new account</a
+                    >
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+<script>
+$(document).ready(function(){
+  let formdata=$('#form');
+  formdata.submit((e)=>{
+    e.preventDefault();
+
+   const form=new FormData(document.getElementById('form'))
+
+    // const js=JSON.stringify(form);
+    const value=Object.fromEntries(form.entries());
+
+console.log(value);
+// console.log(formdata)
+
+
+
+    $.ajax({
+      method:"POST",
+      url:"http://127.0.0.1:3000/user/login",
+      data: value,
+      dataType: "json",
+      // headers:{
+      //   'auth-header':"hello"
+      // },
+      success: function(res){
+        // console.log(res);
+        // var response=JSON.parse(res);
+        // console.log(response);
+        if(res.status==400){
+          $('body').addClass('animateLogin');
+          $('.card').addClass("active");
+          setTimeout(function(){
+            $('body').removeClass('animateLogin');
+            $('.card').removeClass("active");
+          },1000);
+          $('#emsg').html(res.message);
+        }
+        else if(res.status==200){
+          $('#emsg').html(res.message).css({"background-color":"green"});
+          localStorage.setItem('token',res.data);
+
+
+          
+          // $.ajax({
+          //   method: "Get",
+          //   url: "http://127.0.0.1:3000/post",
+          //   headers:{
+          //     'auth-header':res.data
+          //   },
+          //   success: function(data){
+          //     // console.log(data);
+          //      setTimeout(()=>{
+          //   window.location.href= '/post';
+          // },1000)
+          //   }
+          // })
+         
+      }
+    }
+  });
+})
+});
+
+
+
+
+  // console.log(data);
+</script>
+
+    <!--   bootstrap scripts-->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      
+    ></script>
+  </body>
+</html>

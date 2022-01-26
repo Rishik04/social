@@ -1,0 +1,42 @@
+#post .card{
+    width: 350px;
+    box-shadow: 0 5px 10px rgb(1 41 41 /10%);
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+  }
+
+  #post h2{
+      font-size: 1em;
+      font-weight: 300;
+  }
+  #post h1{
+      font-size: 1.5em;
+  }
+  #post textarea{
+      border: 1px solid rgb(1 41 41 /10%);;
+      border-radius: 10px;
+      box-shadow: inset 5px -5px 5px rgb(1 41 41 /10%);
+    }
+
+    #post button{
+        border: none;
+        outline: none;
+        padding: 10px 20px;
+        width: 120px;
+        color: black;
+        background-color: rgb(1 41 41 /10%);
+        margin: auto;
+        box-shadow: 0 5px 10px rgb(1 41 41 /10%);
+        border-radius: 5px;
+        font-size: 1.2em;
+    }
+    #del button{
+        border: none;
+        outline: none;
+        color: black;
+        background-color: rgb(1 41 41 /10%);
+        box-shadow: 0 5px 10px rgb(1 41 41 /10%);
+        font-size: .8em;
+
+    }
