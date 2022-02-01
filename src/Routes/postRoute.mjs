@@ -4,16 +4,16 @@ import * as postController from "../Controllers/postController.mjs";
 import multer from "multer";
 
 const postRouter= express.Router();
-const upload=multer({dest: './upload'})
+const upload=multer({dest: './src/upload'})
 
 
 
-postRouter.get("/",postController.postdata)
-postRouter.post("/addpost",authentication, upload.single('post'), postController.addpost);
+postRouter.get("/", postController.postdata)
+postRouter.post("/addpost", authentication, upload.single('post'), postController.addpost);
 
-postRouter.post("/delpost",authentication, postController.delpost);
+postRouter.post("/delpost", authentication, postController.delpost);
 
-postRouter.post("/:id",authentication,postController.sendLike)
+postRouter.post("/:id",postController.sendLike)
 
 export default postRouter
 

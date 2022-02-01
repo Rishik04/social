@@ -8,7 +8,8 @@ const likeSchema= new Schema({
         type: Number,
         enum: {
             values: 1
-        }
+        },
+        default: 0
     }
 
 });

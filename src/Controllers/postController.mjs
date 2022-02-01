@@ -7,16 +7,16 @@ import path from "path";
 
 export const postdata= async (req,res)=>{
     try{
-        const allPost= await postModel.find().populate('user','name profile');
-
+        const allPost= await postModel.find().populate('user','id name profile');
+        // console.log()
         if(allPost.length>0){
         // return successResponse(allPost,"Fetched Successfully",res);
-        // console.log(allPost)
+        // console.log(allPost.length)
         return res.render('home',{'allpost':allPost})
         }
         else{
-            const error= new Error("No Post Found!")
-            return errorResponse(error, res);
+            // const error= new Error("No Post Found! Add a new post")
+            return res.render('home',{message:"No Post Found! Add a New Post",allpost:0});
         }
     }
     catch(err)
@@ -28,19 +28,19 @@ export const postdata= async (req,res)=>{
 export const addpost = async (req,res)=>{
     try{
         let body= req.body;
-        // console.log(req.file);
+        // console.log(body);
         const add=new postModel(body);
         
         add.user=req.user;
 
-        // add.img.data=fs.readFileSync('./upload/'+req.file.filename);
-        // add.img.contentType=req.file.mimetype;
+        add.img.data=fs.readFileSync('./src/upload/'+req.file.filename);
+        add.img.contentType=req.file.mimetype;
 
         const post=await add.save();
         if(post)
         {
         const allPost= await postModel.find().populate('user','name profile');
-        return successResponse(post,"Successfully Posted", res);
+        return successResponse(post.caption,"Successfully Posted", res);
         // return res.render('home',{'allpost':allPost})
         }
         else{
@@ -83,13 +83,14 @@ export const sendLike= async (req,res)=>{
 
 export const delpost= async (req,res)=>{
     try{
+        console.log(req.user)
         const post= await postModel.findOneAndDelete({
            user: req.user 
         },{_id: req.post_id})
         if(post)
-        return successResponse(post,"Deleted Successfully",res);
+        return successResponse(post._id,"Deleted Successfully",res);
         else{
-            let error = new Error("Can't delete this post");
+            let error = new Error("You are not allowed to delete this post");
             return errorResponse(error,res);
         }
     }

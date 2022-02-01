@@ -15,6 +15,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/css/home.css" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
     <script
       src="https://kit.fontawesome.com/e32d5f4f68.js"
       crossorigin="anonymous"
@@ -24,52 +25,124 @@
   </head>
 
   <body>
-    <div class="container" id="post">
+    <div class="container py-5 my-4" id="post">
       <div class="row mx-auto">
+        <% if(allpost!=0) {%>
         <% for(let i=0;i<allpost.length;i++){ %>
         <div class="col-lg-4 mt-3 mx-auto">
           <div class="card">
+            <div class="card-img-top">
+              <img src="data:<%= allpost[i].img.contentType %>;base64,<%= allpost[i].img.data.toString('base64')%>" alt="pic" class="img-fluid">
+            </div>
+            <div class="card-body">
             <h1>
               <%= allpost[i].caption %>
             </h1>
             <div class="row">
               <div class="col-lg-7">
-                <h2>
-                  <%= allpost[i].user.name  %>
-                </h2>
-              </div>
+                  <h2>
+                    <img src="data:<%= allpost[i].img.contentType %>;base64,<%= allpost[i].img.data.toString('base64')%>" alt="pic">
+                    <%= allpost[i].user.name  %>
+                  </h2>
+                </div>
+              
               <div class="col-lg-5" id="del">
-                <button type="submit">Del</button>
+                <span>
+                  <button type="submit" class="delBtn" onclick="del()">
+                    <i class="ri-delete-bin-2-line mx-2"></i>
+                  </button>
+
+                  <button type="submit" class="likePost">
+                    <%= allpost[i].like %>
+                    <i class="ri-heart-line mx-2"></i>
+                  </button>
+                  </span>
+              </div>
               </div>
             </div>
-           
           </div>
-        </div>
+          </div>
         <% } %>
-      </div>
+        <% } %>
 
-      <form class="form-group mt-3 pt-4" id="form">
-        <textarea name="caption" id="cap" cols="10" rows="5" class="form-control" placeholder="Write Your Post Here"></textarea>
-        <!-- <input type="image"  > -->
-        <div class="text-center mt-3">
-          <button type="submit">Post</button>
-        </div>
-      </form>
+        <% if(allpost==0){ %>
+          <div class="text-center mx-auto mt-3 pt-4">
+            <h4><%= message %></h4>
+          </div>
+          <% } %>
+      </div>
+<div class="card text-center mx-auto mt-4 px-2 py-2">
+  <form class="form-group mt-3 pt-4" id="form">
+    <input type="file" name="post" id="img" class="form-group" accept=".png,.jpg,.jpeg">
+    <textarea name="caption" id="cap" cols="5" rows="2" class="form-control my-2" placeholder="Write Your Post Here"></textarea>
+    <!-- <input type="image"  > -->
+    <div class="text-center mt-3">
+      <button id="add" type="submit">Post</button>
+    </div>
+  </form>
+  <h5 id="msg"></h5>
+</div>
+
     </div>
 
-
     <script>
+      function del(){
+        const url='http://127.0.0.1:3000/post/delpost';
+        let xhr=new XMLHttpRequest();
+        xhr.open('POST',url);
+        const token=localStorage.getItem('token')
+        xhr.setRequestHeader("auth-header",token);
+
+        xhr.onreadystatechange=function(){
+          console.log(xhr.response);
+        }
+        const body={
+          "post_id":"1234"
+        }
+        xhr.send(body)
+      }
+        document.getElementById('add').addEventListener('click',function(e){
+          // console.log("clicked")
+          e.preventDefault();
+          addpost();
+        })
+
+
+        function addpost(){
+        const formdata=document.getElementById('form');
+        const form = new FormData(formdata);
+        const url='http://127.0.0.1:3000/post/addpost';
+        let xhr=new XMLHttpRequest();
+        xhr.open('POST',url);
+        const token=localStorage.getItem('token')
+        xhr.setRequestHeader("auth-header",token);
+        // xhr.setRequestHeader("Content-Type","multipart/form-data")
+        xhr.onreadystatechange=function(){
+          if (this.readyState == 4 && this.status == 200) {
+            const data=JSON.parse(xhr.responseText);
+            document.getElementById('msg').innerHTML=data.message;
+            window.location.href='http://127.0.0.1:3000/post'
+          }
+        }
+        xhr.send(form)
+      }
+
+
+    </script>
+
+    <!-- <script>
       $(document).ready(()=>{
         $('#form').submit((e)=>{
           e.preventDefault();
 
-const form=$('#form').serialize();
-console.log(form)
+// const form=$('#form').serialize();
+// console.log(form)
 
           $.ajax({
             method: "Post",
+            contentType: 'multipart/form-data',
             url: '/post/addpost',
-            data: form,
+            data: $('#img').attr('file'),
             headers:{
               'auth-header': localStorage.getItem('token')
             },
@@ -79,7 +152,7 @@ console.log(form)
           })
         })
       })
-    </script>
+    </script> -->
 
   </body>
 </html>

@@ -55,7 +55,7 @@
                   sed pariatur.
                 </p>
 
-                <form id="form">
+                <form id="form" action="/user/login" method="post">
                 <div class="form-group mt-2">
                   <input
                     type="email"
@@ -99,7 +99,7 @@
         </div>
       </div>
     </section>
-<script>
+<!-- <script>
 $(document).ready(function(){
   let formdata=$('#form');
   formdata.submit((e)=>{
@@ -110,7 +110,7 @@ $(document).ready(function(){
     // const js=JSON.stringify(form);
     const value=Object.fromEntries(form.entries());
 
-console.log(value);
+// console.log(value);
 // console.log(formdata)
 
 
@@ -120,13 +120,8 @@ console.log(value);
       url:"http://127.0.0.1:3000/user/login",
       data: value,
       dataType: "json",
-      // headers:{
-      //   'auth-header':"hello"
-      // },
       success: function(res){
-        // console.log(res);
-        // var response=JSON.parse(res);
-        // console.log(response);
+        // console.log(res.auth)
         if(res.status==400){
           $('body').addClass('animateLogin');
           $('.card').addClass("active");
@@ -137,25 +132,10 @@ console.log(value);
           $('#emsg').html(res.message);
         }
         else if(res.status==200){
+          const token=res.auth
+          console.log(token)
           $('#emsg').html(res.message).css({"background-color":"green"});
-          localStorage.setItem('token',res.data);
-
-
-          
-          // $.ajax({
-          //   method: "Get",
-          //   url: "http://127.0.0.1:3000/post",
-          //   headers:{
-          //     'auth-header':res.data
-          //   },
-          //   success: function(data){
-          //     // console.log(data);
-          //      setTimeout(()=>{
-          //   window.location.href= '/post';
-          // },1000)
-          //   }
-          // })
-         
+          localStorage.setItem('token', token)
       }
     }
   });
@@ -166,7 +146,7 @@ console.log(value);
 
 
   // console.log(data);
-</script>
+</script> -->
 
     <!--   bootstrap scripts-->
     <script

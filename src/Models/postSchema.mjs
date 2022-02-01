@@ -16,8 +16,8 @@ const postSchema= new Schema({
         ref: "users"
     },
     like:[{
-        type: Number,
-        ref: "users"
+        type: Schema.Types.ObjectId,
+        ref: "likes",
     }],
     comment:[{
         type: Schema.Types.ObjectId,

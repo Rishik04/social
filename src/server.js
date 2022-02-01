@@ -27,9 +27,7 @@ app.use("/post", postRouter)
 
 
 
-app.get('/', function (req, res) {
-  return res.render('index');
-});
+app.get('/', userRouter);
 
 app.listen(PORT, ()=>{
     console.log(`Server is running on http://127.0.0.1:${PORT}`);

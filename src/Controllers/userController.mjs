@@ -29,6 +29,7 @@ catch(error){
 
 export const login= async(req, res)=>{
     try{
+        // console.log(req.headers);
         // let userList=await userModel.find({
         //     email: req.body.email,
         //     // password: bcrypt.compare(req.body.password,password)
@@ -42,8 +43,9 @@ export const login= async(req, res)=>{
         if(pwd){
                     const token=jsonwebtoken.sign(userList.toJSON(),process.env.AUTH0_SECRET_KEY);
                     const myPost=await postModel.find({user: userList._id})
-                    return successResponse(myPost,"Successfully Logged In",res);
-                    return res.render('home');
+                    // console.log(myPost)
+                    // return successResponse(myPost,"Successfully Logged In",res);
+                    res.redirect('/post', 200,{status: 200,allPost: myPost, auth: token});
                 }
 
             // return successResponse(token,"Successfully Logged In",res);
