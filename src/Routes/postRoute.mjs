@@ -13,7 +13,7 @@ postRouter.post("/addpost", authentication, upload.single('post'), postControlle
 
 postRouter.post("/delpost", authentication, postController.delpost);
 
-postRouter.post("/:id",postController.sendLike)
+postRouter.post("/like",authentication, postController.sendLike)
 
 export default postRouter
 

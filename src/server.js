@@ -6,6 +6,8 @@ import postRouter from "./Routes/postRoute.mjs"
 import cors from "cors";
 import * as db from "./db/db.js";
 import path from "path"
+import { Socket } from "socket.io";
+
 
 dotenv.config();
 const __dirname=path.resolve()
@@ -29,6 +31,10 @@ app.use("/post", postRouter)
 
 app.get('/', userRouter);
 
-app.listen(PORT, ()=>{
+const server=app.listen(PORT, ()=>{
     console.log(`Server is running on http://127.0.0.1:${PORT}`);
 })
+
+// const io=;
+
+// io.on("connetction",)

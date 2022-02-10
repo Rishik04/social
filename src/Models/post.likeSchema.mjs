@@ -6,11 +6,17 @@ const likeSchema= new Schema({
 
     like:{
         type: Number,
-        enum: {
-            values: 1
-        },
+        enum:[1],
         default: 0
-    }
+    },
+    user:{
+        type: Schema.Types.ObjectId,
+        ref: "users"
+    },
+    post:[{
+        type: Schema.Types.ObjectId,
+        ref: "posts"
+    }]
 
 });
 
