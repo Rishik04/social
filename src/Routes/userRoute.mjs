@@ -15,9 +15,14 @@ userRouter.get("/register",(req,res)=>{
     return res.render('register')
 })
 
-userRouter.get('/', (req,res)=>{
-    return res.render('index');
+userRouter.get('/', userControl.logincheck);
+
+userRouter.get('/login', (req, res)=>{
+    return res.render("login");
 })
 
+userRouter.get('/logout', userControl.logout);
+
 userRouter.post("/login",userControl.login)
+
 export default userRouter;
