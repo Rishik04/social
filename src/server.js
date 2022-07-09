@@ -8,6 +8,7 @@ import * as db from "./db/db.js";
 import path from "path"
 import { Socket } from "socket.io";
 import cookieParser from "cookie-parser";
+import homeRouter from "./Routes/homeRoute.mjs";
 
 
 dotenv.config();
@@ -32,7 +33,7 @@ app.use("/post", postRouter)
 
 
 
-app.get('/', userRouter);
+app.get('/', homeRouter);
 
 const server=app.listen(PORT, ()=>{
     console.log(`Server is running on http://127.0.0.1:${PORT}`);

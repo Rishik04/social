@@ -39,7 +39,7 @@ export const login= async(req, res)=>{
                     const token=jsonwebtoken.sign(userList.toJSON(),process.env.AUTH0_SECRET_KEY);
                     return res.cookie("access_token", token, {
                         httponly: true,
-                    }).redirect('/', 200, {status: 200, allpost: myPost, title: "BlogPost | Home"})
+                    }).redirect('/');
                 }
         else{
             const error=new Error("Invalid Password or email");
@@ -51,21 +51,6 @@ export const login= async(req, res)=>{
         return errorResponse(error,res);
     }
 }
-
-export const logincheck = async(req, res)=>{
-    const token = req.cookies.access_token;
-
-    if(!token)
-        return res.redirect('/user/login');
-
-    else
-    {
-        const val = jsonwebtoken.decode(token);
-        const myPost=await postModel.find({user: val._id})
-        return res.render('home', {status: 200, allpost: myPost, title: "BlogPost | Home"});
-    }
-}
-
 export const logout = async(req, res)=>{
     return res.clearCookie("access_token")
     .redirect('/user/login', 200, {message: "successfully logout"});

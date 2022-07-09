@@ -19,12 +19,12 @@ const postSchema= new Schema({
         type: Schema.Types.ObjectId,
         ref: "likes",
     }],
-    comment:[{
+    comments:[{
         type: Schema.Types.ObjectId,
-        ref: "comment"
+        ref: "comments"
     }]
 
-});
+},{timestamps: true});
 
 const postModel= model("posts",postSchema);
 

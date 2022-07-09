@@ -5,26 +5,8 @@ import { errorResponse, successResponse } from "../services/response.mjs";
 import fs from "fs";
 import path from "path";
 import likeModel from "../Models/post.likeSchema.mjs";
-
-export const postdata= async (req,res)=>{
-    try{
-        const allPost= await postModel.find().populate('user','id name profile');
-        // console.log()
-        if(allPost.length>0){
-        // return successResponse(allPost,"Fetched Successfully",res);
-        // console.log(allPost.length)
-        return res.render('home',{'allpost':allPost})
-        }
-        else{
-            // const error= new Error("No Post Found! Add a new post")
-            return res.render('home',{message:"No Post Found! Add a New Post",allpost:0});
-        }
-    }
-    catch(err)
-    {
-        return errorResponse(err, res);
-    }
-}
+import commentModel from "../Models/postCommentSchema.mjs";
+import jsonwebtoken from "jsonwebtoken";
 
 export const addpost = async (req,res)=>{
     try{
@@ -32,7 +14,7 @@ export const addpost = async (req,res)=>{
         // console.log(body);
         const add=new postModel(body);
         
-        add.user=req.user;
+        add.user= jsonwebtoken.decode(req.cookies.access_token)._id;
 
         add.img.data=fs.readFileSync('./src/upload/'+req.file.filename);
         add.img.contentType=req.file.mimetype;
@@ -41,7 +23,7 @@ export const addpost = async (req,res)=>{
         if(post)
         {
         const allPost= await postModel.find().populate('user','name profile');
-        return successResponse(post.caption,"Successfully Posted", res);
+        return successResponse({},"Successfully Posted", res);
         // return res.render('home',{'allpost':allPost})
         }
         else{

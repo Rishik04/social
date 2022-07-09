@@ -1,144 +1,90 @@
 <%- include("Partials/Header"); -%>
-    <div class="container py-5 my-4" id="post">
-      <div class="row mx-auto">
-        <h4 class="del_msg"></h4>
-        <% if(allpost!=0) {%>
-        <% for(let i=0;i<allpost.length;i++){ %>
-        <div class="col-lg-4 mt-3 mx-auto post" id="<%= allpost[i]._id %>">
-          <div class="card">
-            <div class="card-img-top">
-              <img src="data:<%= allpost[i].img.contentType %>;base64,<%= allpost[i].img.data.toString('base64')%>" alt="pic" class="img-fluid">
-            </div>
-            <div class="card-body">
-            <h1>
-              <%= allpost[i].caption %>
-            </h1>
-            <div class="row">
-              <div class="col-lg-7">
-                  <h2>
-                    <img src="data:<%= allpost[i].img.contentType %>;base64,<%= allpost[i].img.data.toString('base64')%>" alt="pic">
-                    <%= allpost[i].user.name  %>
-                  </h2>
-                </div>
-              
-              <div class="col-lg-5" id="del">
-                <span>
-                  <button type="submit" id="delBtn">
-                    <i class="ri-delete-bin-2-line mx-2"></i>
-                  </button>
 
-                  <button type="submit" class="likePost">
-                    <%= allpost[i].like %>
-                    <i class="ri-heart-line mx-2"></i>
-                  </button>
-                  </span>
-              </div>
-              </div>
+<div class="container py-5 my-4" id="post">
+  <div class="row mx-auto">
+    <h4 class="del_msg"></h4>
+    <% if(allpost!=0) {%> <% for(post of allpost){ %>
+    <div class="col-lg-4 mt-3 mx-auto post" id="post-<%= post._id %>">
+      <div class="card" id="user-<%= post.user._id %>">
+        <div class="card-img-top">
+          <img
+            src="data:<%= post.img.contentType %>;base64,<%= post.img.data.toString('base64')%>"
+            alt="pic"
+            class="img-fluid"
+          />
+        </div>
+        <div class="card-body">
+          <h1><%= post.caption %></h1>
+          <div class="row">
+            <div class="col-lg-6">
+              <h2>
+                <img
+                  src="data:<%= post.img.contentType %>;base64,<%= post.img.data.toString('base64')%>"
+                  alt="pic"
+                />
+                <%= post.user.name %>
+              </h2>
+            </div>
+
+            <div class="col-lg-6" id="del">
+              <span>
+                <button type="submit" id="delBtn">
+                  <i class="ri-delete-bin-2-line mx-1"></i>
+                </button>
+
+                <button type="submit" class="likePost">
+                  <%= post.like %>
+                  <i class="fa-regular fa-comment mx-1"></i>
+                </button>
+
+                <button type="submit" class="likePost">
+                  <%= post.like %>
+                  <i class="ri-heart-line mx-1"></i>
+                </button>
+              </span>
             </div>
           </div>
-          </div>
-        <% } %>
-        <% } %>
 
-        <% if(allpost==0){ %>
-          <div class="text-center mx-auto mt-3 pt-4">
-            <h4><%= message %></h4>
-          </div>
-          <% } %>
+          <form action="post/addcomment" method="post" class="row px-3">
+            <input
+              type="text"
+              placeholder="Type your comment"
+              class="form-control py-2 col-8"
+              name="comment"
+              required
+            />
+            <input type="hidden" value="<%= post._id %>" name="posts" />
+            <input type="submit" value="Submit" class="submitComment col-4" />
+          </form>
+        </div>
+
+        <div class="comment">
+          <ul class="list-unstyled">
+            <% for (comments of post.comments) { %>
+            <p class="px-3 mb-0" id="comment-<%= comments._id %>">
+              <small>
+                <%= comments.user.name %>
+              </small>
+              <%= comments.comment %>
+            </p>
+            <% } %>
+          </ul>
+        </div>
       </div>
-<div class="card text-center mx-auto mt-4 px-2 py-2">
-  <form class="form-group mt-3 pt-4" id="form">
-    <input type="file" name="post" id="img" class="form-group" accept=".png,.jpg,.jpeg">
-    <textarea name="caption" id="cap" cols="5" rows="2" class="form-control my-2" placeholder="Write Your Post Here"></textarea>
-    <!-- <input type="image"  > -->
-    <div class="text-center mt-3">
-      <button id="add" type="submit">Post</button>
     </div>
-  </form>
-  <h5 id="msg"></h5>
+
+    <% } %> <% } %> <% if(allpost==0){ %>
+    <div class="text-center mx-auto mt-3 pt-4">
+      <h4><%= message %></h4>
+    </div>
+    <% } %>
+  </div>
+
+  <!-- add post -->
+
+<%- include("addPost"); -%>
 </div>
 
-    </div>
-
-    <script>
-      const delBtn=document.getElementById('delBtn');
-      if(delBtn!=null){
-      delBtn.addEventListener('click',function(e){
-         const post= document.getElementsByClassName('post')
-         const postid=post[0].id;
-          e.preventDefault();
-          del(postid);
-        })
-      }
-
-      function del(postid){
-        const url='http://127.0.0.1:3000/post/delpost';
-        let xhr=new XMLHttpRequest();
-        xhr.open('POST',url);
-        const token=localStorage.getItem('token')
-        xhr.setRequestHeader("auth-header",token);
-        xhr.setRequestHeader("Content-Type","application/json")
-        xhr.onreadystatechange=function(){
-          const data= JSON.parse(xhr.responseText);
-          document.getElementsByClassName('del_msg').innerHTML=data.message;
-          window.location.href='http://127.0.0.1:3000/post'
-        }
-        xhr.send(JSON.stringify({"postid":postid}))
-      }
-
-        document.getElementById('add').addEventListener('click',function(e){
-          // console.log()
-          e.preventDefault();
-          addpost();
-        })
-
-
-        function addpost(){
-        const formdata=document.getElementById('form');
-        const form = new FormData(formdata);
-        const url='http://127.0.0.1:3000/post/addpost';
-        let xhr=new XMLHttpRequest();
-        xhr.open('POST',url);
-        const token=localStorage.getItem('token')
-        xhr.setRequestHeader("auth-header",token);
-        // xhr.setRequestHeader("Content-Type","multipart/form-data")
-        xhr.onreadystatechange=function(){
-          if (this.readyState == 4 && this.status == 200) {
-            const data=JSON.parse(xhr.responseText);
-            document.getElementById('msg').innerHTML=data.message;
-            window.location.href='http://127.0.0.1:3000/post'
-          }
-        }
-        xhr.send(form)
-      }
-
-
-    </script>
-
-    <!-- <script>
-      $(document).ready(()=>{
-        $('#form').submit((e)=>{
-          e.preventDefault();
-
-// const form=$('#form').serialize();
-// console.log(form)
-
-          $.ajax({
-            method: "Post",
-            contentType: 'multipart/form-data',
-            url: '/post/addpost',
-            data: $('#img').attr('file'),
-            headers:{
-              'auth-header': localStorage.getItem('token')
-            },
-            success: function(res){
-              $('#post').load('/post')
-            }
-          })
-        })
-      })
-    </script> -->
-
-  </body>
-
 <%- include("Partials/Footer"); -%>
+
+<script src="js/home.js"></script>
