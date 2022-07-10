@@ -1,0 +1,73 @@
+<div class="col-lg-4 col-md-6 mt-3 mx-auto post" id="post-<%= post._id %>">
+
+    <div class="card" id="user-<%= post.user._id %>">
+      <div class="card-img-top">
+        <img
+          src="data:<%= post.img.contentType %>;base64,<%= post.img.data.toString('base64')%>"
+          alt="pic"
+          class="img-fluid"
+        />
+      </div>
+
+      <div class="card-body">
+        <h1><%= post.caption %></h1>
+        <div class="row">
+          <div class="col-lg-4">
+            <h2>
+              <img
+                src="data:<%= post.img.contentType %>;base64,<%= post.img.data.toString('base64')%>"
+                alt="pic"
+              />
+              <%= post.user.name %>
+            </h2>
+          </div>
+
+          <div class="col-lg-8" id="del">
+            <span>
+              <button type="submit" id="delBtn">
+                <i class="ri-delete-bin-2-line mx-1"></i>
+              </button>
+
+              <button type="submit" class="commentPost">
+                <%= post.comments.length %>
+                <i class="fa-regular fa-comment mx-1"></i>
+              </button>
+
+              <button type="submit" class="likePost">
+                <%= post.like %>
+                <i class="ri-heart-line mx-1"></i>
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <form class="row px-3" id="commentForm">
+          <input
+            type="text"
+            placeholder="Type your comment"
+            class="form-control py-2 col-8"
+            name="comment"
+            required
+          />
+          <input type="hidden" value="<%= post._id %>" name="posts" />
+          <input type="submit" value="Submit" class="submitComment col-4" />
+        </form>
+
+      </div>
+
+      <div class="comment">
+        <ul class="list-unstyled">
+          <% for (comments of post.comments) { %> 
+          <p class="px-3 mb-0" id="comment-<%= comments._id %>">
+            <small>
+              <%= comments.user.name %>
+            </small>
+            <%= comments.comment %>
+          </p>
+          <% } %>
+        </ul>
+      </div>
+
+    </div>
+    
+  </div>

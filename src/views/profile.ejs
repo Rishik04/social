@@ -1,0 +1,19 @@
+<%- include('Partials/Header') -%>
+
+<div class="container" id="post">
+    <h2 class="d-block text-center">
+        My Profile
+    </h2>
+    <div class="row my-2 mx-2">
+        <% for (post of posts) {%>
+
+            <%- include('posts.ejs') -%>
+
+        <% } %>
+    </div>
+
+</div>
+
+
+
+<%- include('Partials/Footer') -%>

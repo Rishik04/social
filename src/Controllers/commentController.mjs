@@ -8,7 +8,7 @@ import jsonwebtoken from "jsonwebtoken";
 export const addComment = async(req, res)=>{
     try{
         let body = req.body;
-        const post = await postModel.findOne({_id: body.posts})
+        const post = await postModel.findOne({_id: body.posts}).sort({createdAt: 'desc'})
         if(post)
         {
             const addcom = await new commentModel(body);
@@ -19,8 +19,13 @@ export const addComment = async(req, res)=>{
             {
                 post.comments.push(addcom);
                 post.save();
+                let len = post.comments.length;
 
-                res.redirect('/');
+                if(req.xhr)
+                {
+                    const addcomnew= await addcom.populate('user', 'name');
+                   return successResponse(addcom, "Comment added", res);
+                }
             }
         }
     }

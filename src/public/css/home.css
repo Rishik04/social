@@ -7,9 +7,17 @@
     /* padding: 10px; */
   }
 
-  #post h2{
-      font-size: 1.2em;
-      font-weight: 400;
+  #post #add_post.card{
+    width: 70vw !important;
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.956);
+    border: .5px solid rgba(0, 0, 0, 0.325);
+    min-height: auto !important;
+  }
+
+  #post .card-body h2{
+      font-size: .8em;
+      font-weight: 300;
   }
   #post .card .card-img-top img{
       max-height: 300px;
@@ -52,10 +60,10 @@
     #post input[type="file"]{
         border: none;
     }
-    #post h2 img{
+    .card-body img{
         border-radius: 50%;
-        width: 40px;
-        height: 40px;
+        width: 30px;
+        height: 30px;
         padding: 5px;
         /* border: 2px solid red; */
     }

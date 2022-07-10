@@ -1,88 +1,25 @@
 <%- include("Partials/Header"); -%>
 
 <div class="container py-5 my-4" id="post">
-  <div class="row mx-auto">
-    <h4 class="del_msg"></h4>
-    <% if(allpost!=0) {%> <% for(post of allpost){ %>
-    <div class="col-lg-4 mt-3 mx-auto post" id="post-<%= post._id %>">
-      <div class="card" id="user-<%= post.user._id %>">
-        <div class="card-img-top">
-          <img
-            src="data:<%= post.img.contentType %>;base64,<%= post.img.data.toString('base64')%>"
-            alt="pic"
-            class="img-fluid"
-          />
-        </div>
-        <div class="card-body">
-          <h1><%= post.caption %></h1>
-          <div class="row">
-            <div class="col-lg-6">
-              <h2>
-                <img
-                  src="data:<%= post.img.contentType %>;base64,<%= post.img.data.toString('base64')%>"
-                  alt="pic"
-                />
-                <%= post.user.name %>
-              </h2>
-            </div>
-
-            <div class="col-lg-6" id="del">
-              <span>
-                <button type="submit" id="delBtn">
-                  <i class="ri-delete-bin-2-line mx-1"></i>
-                </button>
-
-                <button type="submit" class="likePost">
-                  <%= post.like %>
-                  <i class="fa-regular fa-comment mx-1"></i>
-                </button>
-
-                <button type="submit" class="likePost">
-                  <%= post.like %>
-                  <i class="ri-heart-line mx-1"></i>
-                </button>
-              </span>
-            </div>
-          </div>
-
-          <form action="post/addcomment" method="post" class="row px-3">
-            <input
-              type="text"
-              placeholder="Type your comment"
-              class="form-control py-2 col-8"
-              name="comment"
-              required
-            />
-            <input type="hidden" value="<%= post._id %>" name="posts" />
-            <input type="submit" value="Submit" class="submitComment col-4" />
-          </form>
-        </div>
-
-        <div class="comment">
-          <ul class="list-unstyled">
-            <% for (comments of post.comments) { %>
-            <p class="px-3 mb-0" id="comment-<%= comments._id %>">
-              <small>
-                <%= comments.user.name %>
-              </small>
-              <%= comments.comment %>
-            </p>
-            <% } %>
-          </ul>
-        </div>
-      </div>
+  <%- include("addPost"); -%>
+  
+  <div id="all_posts">
+    <h1 class="d-block text-center">All Posts</h1>
+    <div class="row mx-auto">
+      <% if(allpost!=0) {%> <% for(post of allpost){ %> <%- include('posts') -%>
+      <% } %> <% } %>
     </div>
 
-    <% } %> <% } %> <% if(allpost==0){ %>
+    <% if(allpost==0){ %>
+
     <div class="text-center mx-auto mt-3 pt-4">
       <h4><%= message %></h4>
     </div>
+
     <% } %>
   </div>
 
   <!-- add post -->
-
-<%- include("addPost"); -%>
 </div>
 
 <%- include("Partials/Footer"); -%>

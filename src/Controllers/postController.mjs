@@ -22,9 +22,13 @@ export const addpost = async (req,res)=>{
         const post=await add.save();
         if(post)
         {
-        const allPost= await postModel.find().populate('user','name profile');
-        return successResponse({},"Successfully Posted", res);
-        // return res.render('home',{'allpost':allPost})
+            const allPost = await postModel.findOne({_id: post._id}).populate('user', 'name');
+            const imgData = allPost.img.data.toString('base64');
+
+            if(req.xhr)
+            {
+                return successResponse({allPost: allPost, img: imgData},"Successfully Posted", res);
+            }
         }
         else{
             const error= new Error("Unable to Post");

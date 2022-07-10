@@ -9,6 +9,7 @@ import path from "path"
 import { Socket } from "socket.io";
 import cookieParser from "cookie-parser";
 import homeRouter from "./Routes/homeRoute.mjs";
+import profileRouter from "./Routes/profileRoute.mjs";
 
 
 dotenv.config();
@@ -22,12 +23,14 @@ app.set('views',path.join(__dirname,'/src/views'))
 
 app.use(cors())
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/src/public')))
 
 app.use("/user", userRouter);
-app.use("/post", postRouter)
+app.use("/post", postRouter);
+
+app.use("/profile", profileRouter);
 
 
 
