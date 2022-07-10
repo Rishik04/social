@@ -15,8 +15,13 @@ export const Getprofile = async(req, res)=>{
     if(finduser!=null)
     {
         res.locals.user = jsonwebtoken.decode(req.cookies.access_token)._id
-        const findpost = await postModel.find({user: finduser._id}).populate('user', 'name').populate('comments');
-        return res.render('profile', {title: "Profile", posts: findpost})
+        const findpost = await postModel.find({user: finduser._id}).populate('user', 'name').populate({
+            path: 'comments',
+            populate: {
+                path: 'user'
+            }
+        });
+        return res.render('profile', {title: "Profile", allpost: findpost})
     }
     else{
         return res.redirect('back');
