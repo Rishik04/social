@@ -73,9 +73,16 @@ export const delpost= async (req,res)=>{
     try{
         // console.log(req.user)
         // console.log(req.body.postid)
-        const post= await postModel.findOneAndDelete({_id: req.body.postid,user: req.user},{_id: req.body.postid});
+        const post= await postModel.findOneAndDelete({_id: req.body.postid, user: res.locals.user},{_id: req.body.postid});
         if(post)
-        return successResponse(post._id,"Deleted Successfully",res);
+        {
+            await commentModel.deleteMany({posts: post._id})
+            if(req.xhr)
+            {
+                return successResponse(post,"Deleted Successfully",res);
+            }
+            
+        }
         else{
             let error = new Error("You are not allowed to delete this post");
             return errorResponse(error,res);

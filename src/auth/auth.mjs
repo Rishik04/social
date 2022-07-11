@@ -16,6 +16,8 @@ export const authentication= async (req,res,next)=>{
 
     else
     {
+        const user = jsonwebtoken.decode(token)._id;
+        res.locals.user = user
         next();
     }
     }

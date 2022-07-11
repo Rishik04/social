@@ -24,9 +24,12 @@
 
           <div class="col-lg-8" id="del">
             <span>
-              <button type="submit" id="delBtn">
+                <% if (locals.user == post.user._id) {%>
+              <button type="submit" id="del-<%= post._id %>" class="del_submit">
                 <i class="ri-delete-bin-2-line mx-1"></i>
               </button>
+              <% } %>
+              
 
               <button type="submit" class="commentPost">
                 <%= post.comments.length %>
@@ -41,7 +44,7 @@
           </div>
         </div>
 
-        <form class="row px-3" id="commentForm">
+        <form class="row px-3 comment_form" id="commentForm-<%= post._id %>">
           <input
             type="text"
             placeholder="Type your comment"
@@ -50,20 +53,23 @@
             required
           />
           <input type="hidden" value="<%= post._id %>" name="posts" />
-          <input type="submit" value="Submit" class="submitComment col-4" />
+          <!-- <button type="submit" class="submitComment" id="commentbtn-<%= post._id %>">Submit</button> -->
+          <input type="submit" value="Submit" class="submitComment col-4" id="commentbtn-<%= post._id %>"/>
         </form>
 
       </div>
 
       <div class="comment">
         <ul class="list-unstyled">
-          <% for (comments of post.comments) { %> 
-          <p class="px-3 mb-0" id="comment-<%= comments._id %>">
-            <small>
-              <%= comments.user.name %>
-            </small>
-            <%= comments.comment %>
-          </p>
+          <% for (comments of post.comments) { %>
+            <a href="/profile/<%= comments.user._id %>" id="user-profile-<%= comments._id %>">
+                <p class="px-3 mb-0" id="comment-<%= comments._id %>">
+                  <small>
+                    <%= comments.user.name %>
+                  </small>
+                  <%= comments.comment %>
+                </p>
+            </a>
           <% } %>
         </ul>
       </div>

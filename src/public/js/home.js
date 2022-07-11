@@ -92,46 +92,81 @@
 
     addPost();
 
+//delete a post
 
+    const delPost = function()
+    {
 
-    
-    
-};
-{
-    let commentformData = function(){
-        let formData = $(`#commentForm`);
-    
-        formData.submit(function(e){
+        $('.del_submit').on('click', (e)=>{
             e.preventDefault();
-    
+            let id = e.currentTarget.id.substring(4); 
+
             $.ajax({
                 method: 'post',
-                url: '/post/addcomment',
-                data: formData.serialize(),
-                success: (e)=>{
-                    let addComment = newComment(e.data);
-                    console.log(e.data.posts)
-                    $(`#post-${e.data.posts} .comment>ul`).prepend(addComment);
+                url: 'post/delpost',
+                data: {
+                    postid: id
                 },
-                error: (err)=>{
-                    console.log(err)
-                }
+                success: (e)=>{
+                    $(`#post-${e.data._id}`).remove();
+                },
+                error: 
+                    (e)=>{
+                        console.log(e);
+                    }
             })
+
         })
     }
+
+
+    delPost();
+
+//comment on a post
+
+    let commentformData = function(){
+
+        
+        $('.comment_form').submit((e)=>{
+            e.preventDefault();
+            let formData = $(`#${e.currentTarget.id}`);
+            console.log(formData.serialize())
+
+                $.ajax({
+                    method: 'post',
+                    url: '/post/addcomment',
+                    data: formData.serialize(),
+                    success: (e)=>{
+                        let addComment = newComment(e.data);
+                        $(`#post-${e.data.posts} .comment>ul`).prepend(addComment);
+                    },
+                    error: (err)=>{
+                        console.log(err)
+                    }
+                })
+
+            })
+
+    }
+
+
     let newComment = function(comments)
 {
     return $(`<div class="comment">
     <ul class="list-unstyled">
+    <a href="/profile/${comments.user._id}" id="user-profile-${comments._id }">
       <p class="px-3 mb-0" id="comment-${comments._id}">
         <small>
           ${comments.user.name}
         </small>
         ${comments.comment}
       </p>
+      </a>
     </ul>
   </div>`)
 }
 
 commentformData();
+    
+    
 }
