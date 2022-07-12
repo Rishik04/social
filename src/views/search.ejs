@@ -1,0 +1,33 @@
+<%- include('Partials/Header.ejs') -%>
+
+<div class="searchUserList">
+    <div class="container">
+        <h4 class="d-block text-center">
+            Search User
+        </h4>
+        <form id="search-form-query" class="search-form">
+            <input type="text" name="search-query" id="search_q_id" placeholder="Search Your Connection"/>
+            <button type="submit" id="submit_search">Search <i class="fa-solid fa-magnifying-glass"></i></button>
+        </form>
+    
+        <div class="userList">
+            <!-- <div class="card">
+                <div class="row justify-content-center">
+                    <div class="col-lg-3">
+                        <img src="#" alt="profile">
+                    </div>
+
+                    <div class="col-lg-4">
+                        <h4>Rishik</h4>
+                    </div>
+                </div>
+            </div>
+            <hr> -->
+        </div>
+    </div>
+</div>
+
+
+<%- include('Partials/Footer.ejs') -%>
+
+<script src="js/home.js"></script>

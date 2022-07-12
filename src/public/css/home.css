@@ -75,4 +75,85 @@
         border-radius: 10px;
         padding: 5px 15px;
     }
-    
+
+    .comment a{
+        text-decoration: none;
+        color: rgba(0, 0, 0, 0.5);
+    }
+
+    #post .profile_details ul li{
+        margin: 5px 5px;
+        font-size: 20px;
+        font-weight: 500;
+    }
+    #post .profile_details ul{
+        display: flex;
+    }
+
+    #post .profile_data p{
+        font-size: 15px;
+    }
+    #post .profile_details ul button{
+        margin: 5px;
+        padding: 5px 15px !important;
+        border: none;
+        background: rgba(0, 0, 0, 0.100);
+        color: #000;
+        border-radius: 6px;
+        font-weight: 500;
+        font-size: 14px;
+    }
+
+    #post .profile-section{
+        min-height: 30vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-top: 5vh;
+    }
+
+    .searchUserList .card{
+        width: 50vh;
+        margin: auto;
+        box-shadow: 0 2px 5px rgb(1 41 41 /5%);
+        padding: 10px 15px;
+        border-right: none;
+        border-left: none;
+        border-radius: 0;
+    }
+.searchUserList .card img{
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+}
+.searchUserList .card h4{
+    font-weight: 400;
+    font-size: 22px;
+    text-align: center;
+    margin: auto;
+}
+.searchUserList input[type='text']
+{
+    border-radius: 0;
+    height: 40px;
+    padding: 10px;
+    border: .2px solid rgba(0, 0, 0, 0.100);
+}
+.searchUserList button
+{
+    background-color: rgb(234, 183, 44);
+    border: none;
+    border-radius: 2px;
+    padding: 7px 15px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #fff;
+    vertical-align: baseline;
+}
+.searchUserList form{
+    text-align: center;
+    padding: 20px;
+}
+.searchUserList hr{
+    width: 70vh;
+}

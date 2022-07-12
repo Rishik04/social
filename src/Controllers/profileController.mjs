@@ -15,6 +15,7 @@ export const Getprofile = async(req, res)=>{
     if(finduser!=null)
     {
         res.locals.user = jsonwebtoken.decode(req.cookies.access_token)._id
+        res.locals.name = jsonwebtoken.decode(req.cookies.access_token).name
         const findpost = await postModel.find({user: finduser._id}).populate('user', 'name').populate({
             path: 'comments',
             populate: {

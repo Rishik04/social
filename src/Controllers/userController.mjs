@@ -37,9 +37,12 @@ export const login= async(req, res)=>{
         if(pwd){
                     const myPost=await postModel.find({user: userList._id})
                     const token=jsonwebtoken.sign(userList.toJSON(),process.env.AUTH0_SECRET_KEY);
-                    return res.cookie("access_token", token, {
-                        httponly: true,
-                    }).redirect('/');
+                    res.cookie("access_token", token,{httponly: true});
+
+                    res.locals.user = userList._id
+                    res.locals.name = userList.name
+                    
+                    return res.redirect('/')
                 }
         else{
             const error=new Error("Invalid Password or email");
@@ -47,8 +50,8 @@ export const login= async(req, res)=>{
         }
     }
     catch(err){
-        const error = new Error("No user Found! Please register")
-        return errorResponse(error,res);
+        // const error = new Error("No user Found! Please register")
+        return errorResponse(err,res);
     }
 }
 export const logout = async(req, res)=>{

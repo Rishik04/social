@@ -10,6 +10,7 @@ import { Socket } from "socket.io";
 import cookieParser from "cookie-parser";
 import homeRouter from "./Routes/homeRoute.mjs";
 import profileRouter from "./Routes/profileRoute.mjs";
+import searchRouter from "./Routes/searchRoute.mjs";
 
 
 dotenv.config();
@@ -31,6 +32,7 @@ app.use("/user", userRouter);
 app.use("/post", postRouter);
 
 app.use("/profile", profileRouter);
+app.use("/search", searchRouter);
 
 
 

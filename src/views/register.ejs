@@ -1,32 +1,4 @@
-<!DOCTYPE html>
-
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,600;0,700;1,400&display=swap"
-      rel="stylesheet"
-    />
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.min.js"
-      
-    ></script>
-    <link rel="stylesheet" href="/css/style.css" />
-    <script
-      src="https://kit.fontawesome.com/e32d5f4f68.js"
-      crossorigin="anonymous"
-    ></script>
-    <title>Register</title>
-  </head>
-
-  <body>
+<%- include('Partials/Header.ejs') -%>
     <section id="login">
       <div class="container pt-4 justify-content-center">
         <div class="card">
@@ -60,7 +32,7 @@
                     type="name"
                     class="detail required"
                     placeholder="User Name"
-                    name="username"
+                    name="name"
                   />
                 </div>
                 <div class="form-group mt-2">
@@ -69,6 +41,14 @@
                     class="detail"
                     placeholder="Email"
                     name="email"
+                  />
+                </div>
+                <div class="form-group mt-2">
+                  <input
+                    type="tel"
+                    class="detail"
+                    placeholder="Phone Number"
+                    name="contactNum"
                   />
                 </div>
                 <div class="form-group mt-4">

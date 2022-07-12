@@ -130,7 +130,6 @@
         $('.comment_form').submit((e)=>{
             e.preventDefault();
             let formData = $(`#${e.currentTarget.id}`);
-            console.log(formData.serialize())
 
                 $.ajax({
                     method: 'post',
@@ -152,7 +151,13 @@
 
     let newComment = function(comments)
 {
-    return $(`<div class="comment">
+    return $(`
+    <button type="submit" class="commentPost">
+                ${comments.length}
+                <i class="fa-regular fa-comment mx-1"></i>
+              </button>
+    
+    <div class="comment">
     <ul class="list-unstyled">
     <a href="/profile/${comments.user._id}" id="user-profile-${comments._id }">
       <p class="px-3 mb-0" id="comment-${comments._id}">
@@ -167,6 +172,48 @@
 }
 
 commentformData();
+
+
+
+const searchForm = function()
+{
+    $('#search-form-query').submit((e)=>{
+        e.preventDefault();
+
+        $.ajax({
+            url: '/search/query',
+            method: 'post',
+            data: $('#search-form-query').serialize(),
+            success: (e)=>{
+                console.log(e)
+                let formdata = newseardata(e);
+                $('.userList').append(formdata);
+            },
+            error: (e)=>{
+                console.log(e);
+            }
+        })
+    })
+}
+
+let newseardata = function(data)
+{
+    return $(`
+    <div class="card">
+    <div class="row justify-content-center">
+        <div class="col-lg-3">
+            <img src="#" alt="profile">
+        </div>
+
+        <div class="col-lg-4">
+            <h4>Rishik</h4>
+        </div>
+    </div>
+</div>
+<hr>`)
+}
+
+searchForm();
     
     
 }

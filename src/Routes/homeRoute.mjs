@@ -4,6 +4,6 @@ import * as homeController from "../Controllers/homeConroller.mjs";
 const homeRouter = express.Router();
 
 
-homeRouter.get('/', homeController.postdata);
+homeRouter.get('/', authentication, homeController.postdata);
 
 export default homeRouter;
