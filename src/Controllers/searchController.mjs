@@ -9,7 +9,7 @@ export const searchpage = async(req,res)=>{
 export const findquery = async(req,res)=>{
     let query = req.body["search-query"];
     try{
-        const findUser = await userModel.find({name: new RegExp(query, 'i') }, {name: 1, _id: 1})
+        const findUser = await userModel.find({name: new RegExp(query, 'i') }, {name: 1, _id: 1, profile: 1})
         // console.log(findUser);
         if(req.xhr)
         {

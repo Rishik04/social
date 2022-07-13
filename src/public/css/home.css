@@ -2,13 +2,13 @@
     width: 300px;
     box-shadow: 0 5px 10px rgb(1 41 41 /10%);
     border: none;
-    border-radius: 10px;
+    border-radius: 4px;
     min-height: 450px;
     /* padding: 10px; */
   }
 
   #post #add_post.card{
-    width: 70vw !important;
+    max-width: 70vw !important;
     margin-bottom: 20px;
     background-color: rgba(255, 255, 255, 0.956);
     border: .5px solid rgba(0, 0, 0, 0.325);
@@ -23,7 +23,7 @@
       max-height: 300px;
       width: 100%;
       padding: 0 !important;
-      border-radius: 5px;
+      border-radius: 4px;
   }
   #post .card .card-body{
       padding: 12px;
@@ -33,7 +33,7 @@
   }
   #post textarea, input[type="text"]{
       border: 1px solid rgb(1 41 41 /10%);;
-      border-radius: 10px;
+      border-radius: 4px;
       box-shadow: inset 5px -5px 5px rgb(1 41 41 /10%);
     }
 
@@ -46,7 +46,7 @@
         background-color: rgb(1 41 41 /10%);
         margin: auto;
         box-shadow: 0 5px 10px rgb(1 41 41 /10%);
-        border-radius: 5px;
+        border-radius: 4px;
         font-size: 1.2em;
     }
     #del button{
@@ -72,7 +72,7 @@
         background-color: black;
         color: #fff;
         border: none;
-        border-radius: 10px;
+        border-radius: 4px;
         padding: 5px 15px;
     }
 
@@ -105,15 +105,25 @@
     }
 
     #post .profile-section{
-        min-height: 30vh;
+        min-height: 10vh;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        margin-top: 5vh;
+        margin-top: 2vh;
+        margin-bottom: 2vh;
+    }
+
+    #post .profile-section img{
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+    }
+    #post .profile-section{
+        background-color: #f2f2ff;
     }
 
     .searchUserList .card{
-        width: 50vh;
+        max-width: 50vh;
         margin: auto;
         box-shadow: 0 2px 5px rgb(1 41 41 /5%);
         padding: 10px 15px;
@@ -122,8 +132,8 @@
         border-radius: 0;
     }
 .searchUserList .card img{
-    width: 120px;
-    height: 120px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
 }
 .searchUserList .card h4{
@@ -155,5 +165,32 @@
     padding: 20px;
 }
 .searchUserList hr{
-    width: 70vh;
+    max-width: 70vh;
+}
+.searchUserList a{
+    text-decoration: none;
+    color: rgba(0, 0, 0, .900);
+}
+
+#img{
+    color: transparent;
+    max-width: 150px;
+}
+#post form{
+    font-size: 20px;
+}
+#img::-webkit-file-upload-button{
+    visibility: hidden;
+}
+
+#img::before{
+    content: 'Choose a file';
+    display: inline-block;
+    cursor: pointer;
+    background-color: rgba(241, 195, 56, 0.803);
+    color: #fff;
+    padding: 5px 15px;
+    box-shadow: 0 2px 5px rgb(1 41 41 /10%);
+    border-radius: 4px;
+    position: absolute;
 }

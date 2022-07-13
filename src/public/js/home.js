@@ -1,37 +1,32 @@
 {
-    let addPost = function()
-    {
-        let postForm = $('#add_post_form');
-        
-        postForm.submit(function(e){
-            e.preventDefault();
-            let formData = new FormData($('#add_post_form')[0]);            
+  let addPost = function () {
+    let postForm = $("#add_post_form");
 
-            $.ajax({
-                type: 'Post',
-                url: '/post/addpost',
-                enctype: 'multipart/form-data',
-                data: formData,
-                contentType: false,
-                processData: false,
-                cache: false,
-                success: function(res)
-                {
-                    let newPost = newPostData(res.data)
-                    $('#all_posts>.row').prepend(newPost);
-                },
-                error: function(error)
-                {
-                    console.log(error);
-                }
-            })
-        });
+    postForm.submit(function (e) {
+      e.preventDefault();
+      let formData = new FormData($("#add_post_form")[0]);
 
-    }
+      $.ajax({
+        type: "Post",
+        url: "/post/addpost",
+        enctype: "multipart/form-data",
+        data: formData,
+        contentType: false,
+        processData: false,
+        cache: false,
+        success: function (res) {
+          let newPost = newPostData(res.data);
+          $("#all_posts>.row").prepend(newPost);
+        },
+        error: function (error) {
+          console.log(error);
+        },
+      });
+    });
+  };
 
-    let newPostData = function(post)
-    {    
-        return $(`
+  let newPostData = function (post) {
+    return $(`
           <div class="col-lg-4 mt-3 mx-auto post col-md-6" id="post-${post.allPost._id}">
             <div class="card" id="user-${post.allPost.user._id}">
             <div class="card-img-top">
@@ -87,70 +82,59 @@
               </div>
             </div>
           </div>
-      `)
-    }
+      `);
+  };
 
-    addPost();
+  addPost();
 
-//delete a post
+  //delete a post
 
-    const delPost = function()
-    {
+  const delPost = function () {
+    $(".del_submit").on("click", (e) => {
+      e.preventDefault();
+      let id = e.currentTarget.id.substring(4);
 
-        $('.del_submit').on('click', (e)=>{
-            e.preventDefault();
-            let id = e.currentTarget.id.substring(4); 
+      $.ajax({
+        method: "post",
+        url: "post/delpost",
+        data: {
+          postid: id,
+        },
+        success: (e) => {
+          $(`#post-${e.data._id}`).remove();
+        },
+        error: (e) => {
+          console.log(e);
+        },
+      });
+    });
+  };
 
-            $.ajax({
-                method: 'post',
-                url: 'post/delpost',
-                data: {
-                    postid: id
-                },
-                success: (e)=>{
-                    $(`#post-${e.data._id}`).remove();
-                },
-                error: 
-                    (e)=>{
-                        console.log(e);
-                    }
-            })
+  delPost();
 
-        })
-    }
+  //comment on a post
 
+  let commentformData = function () {
+    $(".comment_form").submit((e) => {
+      e.preventDefault();
+      let formData = $(`#${e.currentTarget.id}`);
 
-    delPost();
+      $.ajax({
+        method: "post",
+        url: "/post/addcomment",
+        data: formData.serialize(),
+        success: (e) => {
+          let addComment = newComment(e.data);
+          $(`#post-${e.data.posts} .comment>ul`).prepend(addComment);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+    });
+  };
 
-//comment on a post
-
-    let commentformData = function(){
-
-        
-        $('.comment_form').submit((e)=>{
-            e.preventDefault();
-            let formData = $(`#${e.currentTarget.id}`);
-
-                $.ajax({
-                    method: 'post',
-                    url: '/post/addcomment',
-                    data: formData.serialize(),
-                    success: (e)=>{
-                        let addComment = newComment(e.data);
-                        $(`#post-${e.data.posts} .comment>ul`).prepend(addComment);
-                    },
-                    error: (err)=>{
-                        console.log(err)
-                    }
-                })
-
-            })
-
-    }
-
-
-    let newComment = function(comments)
-{
+  let newComment = function (comments) {
     return $(`
     <button type="submit" class="commentPost">
                 ${comments.length}
@@ -159,7 +143,7 @@
     
     <div class="comment">
     <ul class="list-unstyled">
-    <a href="/profile/${comments.user._id}" id="user-profile-${comments._id }">
+    <a href="/profile/${comments.user._id}" id="user-profile-${comments._id}">
       <p class="px-3 mb-0" id="comment-${comments._id}">
         <small>
           ${comments.user.name}
@@ -168,52 +152,80 @@
       </p>
       </a>
     </ul>
-  </div>`)
-}
+  </div>`);
+  };
 
-commentformData();
+  commentformData();
+
+  const searchForm = function () {
+    $("#search-form-query").submit((e) => {
+      e.preventDefault();
+
+      $.ajax({
+        url: "/search/query",
+        method: "post",
+        data: $("#search-form-query").serialize(),
+        success: (e) => {
+          console.log(e);
+          let formdata = newseardata(e.data);
+          $(".userList>").remove();
+          $(".userList").append(formdata);
+        },
+        error: (e) => {
+          console.log(e);
+        },
+      });
+    });
+  };
+
+  let newseardata = function (data) {
+    if (data.length != 0) {
+      let val = `<hr>`;
+      for (data of data) {
+        val += `<a href="/profile/${data._id}"><div class="card" id="profile-${data._id}">
+        <div class="row justify-content-around">
+            <div class="col-lg-3 col-md-3 col-2">
+                <img src="${data.profile}" alt="profile">
+            </div>
+    
+            <div class="col-lg-4 col-md-4 col-5 my-auto">
+                <h4>${data.name}</h4>
+            </div>
+        </div>
+    </div></a>
+    <hr>`;
+      }
+      return val;
+    }
+    else{
+        return $(`<h2>No User Found</h2>`)
+    }
+  };
+
+  searchForm();
 
 
-
-const searchForm = function()
-{
-    $('#search-form-query').submit((e)=>{
-        e.preventDefault();
-
+  const add = function()
+  {
+    $('.connect').on('click',(e)=>{
+        const id = e.target.id.substring(8);
+        const data = {
+            _id: id
+        }
         $.ajax({
-            url: '/search/query',
+            url: '/profile/connect',
             method: 'post',
-            data: $('#search-form-query').serialize(),
+            data: data,
             success: (e)=>{
-                console.log(e)
-                let formdata = newseardata(e);
-                $('.userList').append(formdata);
+                console.log(e.message)
+                $('.connect').html(e.message)
             },
             error: (e)=>{
                 console.log(e);
             }
         })
     })
-}
+  }
 
-let newseardata = function(data)
-{
-    return $(`
-    <div class="card">
-    <div class="row justify-content-center">
-        <div class="col-lg-3">
-            <img src="#" alt="profile">
-        </div>
-
-        <div class="col-lg-4">
-            <h4>Rishik</h4>
-        </div>
-    </div>
-</div>
-<hr>`)
-}
-
-searchForm();
-    
-    
+  add();
 }

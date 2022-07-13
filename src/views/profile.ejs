@@ -1,12 +1,12 @@
 <%- include('Partials/Header') -%>
 
-<div class="container" id="post">
-    <div class="profile-section">
+<div class="container my-4 py-5" id="post">
+    <div class="profile-section p-3">
         <div class="row justify-content-around">
             <div class="col-lg-5">
                 <div class="profile_data">
-                    <img src="#" alt="profile_photo" class="img-fluid">
-                    <h6><%= locals.name %></h6>
+                    <img src="<%= profile %>" alt="profile_photo" class="img-fluid">
+                    <h6 class="py-2 mt-3 pt-3"><%= allpost[0].user.name %></h6>
                     <p>Profile Bio</p>
                 </div>
             </div>
@@ -16,9 +16,13 @@
                         <li>Posts</li>
                         <li>Friends</li>
                         <% if(allpost[0].user._id!=locals.user) { %>
-                        <button type="submit" class="px-3">Connection</button>
-                        <button type="submit" class="px-3">Connected</button>
+                            <% if(friends.includes(allpost[0].user._id)) { %>
+                              <button type="submit" class="px-3 connect" id="connect-<%= allpost[0].user._id %>">Connected</button>
+                            <% } else { %>
 
+                                <button type="submit" class="px-3 connect" id="connect-<%= allpost[0].user._id %>">Connect</button>
+                            <% } %>
+                            
                         <% } %>
                     </div>
                     </ul>
@@ -28,7 +32,7 @@
     <h2 class="d-block text-center">
         Posts
     </h2>
-    <div class="row my-2 mx-2">
+    <div class="row my-2 mx-2 py-4">
         <% for (post of allpost) {%>
 
             <%- include('posts.ejs') -%>

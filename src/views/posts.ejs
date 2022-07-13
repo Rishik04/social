@@ -1,6 +1,6 @@
 <div class="col-lg-4 col-md-6 mt-3 mx-auto post" id="post-<%= post._id %>">
 
-    <div class="card" id="user-<%= post.user._id %>">
+    <div class="card mx-auto" id="user-<%= post.user._id %>">
       <div class="card-img-top">
         <img
           src="data:<%= post.img.contentType %>;base64,<%= post.img.data.toString('base64')%>"

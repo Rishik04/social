@@ -30,14 +30,16 @@ const userSchema= new Schema({
     },
     friends:[{
         type: Schema.Types.ObjectId,
-        ref: "friends"
+        ref: "users"
     }],
     profile:{
-        data: Buffer,
-        contentType: String
+        // data: Buffer,
+        type: String,
+        contentType: String,
+        default: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
     },
     
-});
+},{timestamps: true});
 
 userSchema.pre('save', async function(next){
     if(/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(this.email))
