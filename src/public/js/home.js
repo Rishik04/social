@@ -136,11 +136,6 @@
 
   let newComment = function (comments) {
     return $(`
-    <button type="submit" class="commentPost">
-                ${comments.length}
-                <i class="fa-regular fa-comment mx-1"></i>
-              </button>
-    
     <div class="comment">
     <ul class="list-unstyled">
     <a href="/profile/${comments.user._id}" id="user-profile-${comments._id}">

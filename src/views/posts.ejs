@@ -1,38 +1,38 @@
-<div class="col-lg-4 col-md-6 mt-3 mx-auto post" id="post-<%= post._id %>">
+<div class="col-lg-4 col-md-6 mt-3 mx-auto post" id="post-<%= post.allPost._id %>">
 
-    <div class="card mx-auto" id="user-<%= post.user._id %>">
+    <div class="card mx-auto" id="user-<%= post.allPost.user._id %>">
       <div class="card-img-top">
         <img
-          src="data:<%= post.img.contentType %>;base64,<%= post.img.data.toString('base64')%>"
+          src="data:<%= post.allPost.img.contentType %>;base64,<%= post.allPost.img.data.toString('base64')%>"
           alt="pic"
           class="img-fluid"
         />
       </div>
 
       <div class="card-body">
-        <h1><%= post.caption %></h1>
+        <h1><%= post.allPost.caption %></h1>
         <div class="row">
           <div class="col-lg-4">
             <h2>
               <img
-                src="data:<%= post.img.contentType %>;base64,<%= post.img.data.toString('base64')%>"
+                src="data:<%= post.allPost.img.contentType %>;base64,<%= post.allPost.img.data.toString('base64')%>"
                 alt="pic"
               />
-              <%= post.user.name %>
+              <%= post.allPost.user.name %>
             </h2>
           </div>
 
           <div class="col-lg-8" id="del">
             <span>
-                <% if (locals.user == post.user._id) {%>
-              <button type="submit" id="del-<%= post._id %>" class="del_submit">
+                <% if (locals.user == post.allPost.user._id) {%>
+              <button type="submit" id="del-<%= post.allPost._id %>" class="del_submit">
                 <i class="ri-delete-bin-2-line mx-1"></i>
               </button>
               <% } %>
               
 
               <button type="submit" class="commentPost">
-                <%= post.comments.length %>
+                <%= post.allPost.comments.length %>
                 <i class="fa-regular fa-comment mx-1"></i>
               </button>
 
@@ -44,7 +44,7 @@
           </div>
         </div>
 
-        <form class="row px-3 comment_form" id="commentForm-<%= post._id %>">
+        <form class="row px-3 comment_form" id="commentForm-<%= post.allPost._id %>">
           <input
             type="text"
             placeholder="Type your comment"
@@ -52,16 +52,15 @@
             name="comment"
             required
           />
-          <input type="hidden" value="<%= post._id %>" name="posts" />
-          <!-- <button type="submit" class="submitComment" id="commentbtn-<%= post._id %>">Submit</button> -->
-          <input type="submit" value="Submit" class="submitComment col-4" id="commentbtn-<%= post._id %>"/>
+          <input type="hidden" value="<%= post.allPost._id %>" name="posts" />
+          <input type="submit" value="Submit" class="submitComment col-4" id="commentbtn-<%= post.allPost._id %>"/>
         </form>
 
       </div>
 
       <div class="comment">
         <ul class="list-unstyled">
-          <% for (comments of post.comments) { %>
+          <% for (comments of post.allPost.comments) { %>
             <a href="/profile/<%= comments.user._id %>" id="user-profile-<%= comments._id %>">
                 <p class="px-3 mb-0" id="comment-<%= comments._id %>">
                   <small>
