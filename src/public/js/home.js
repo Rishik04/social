@@ -8,7 +8,7 @@
 
       $.ajax({
         type: "Post",
-        url: "/post/addpost",
+        url: "https://rishik04.herokuapp.com/post/addpost",
         enctype: "multipart/form-data",
         data: formData,
         contentType: false,
@@ -96,7 +96,7 @@
 
       $.ajax({
         method: "post",
-        url: "http://127.0.0.1:3000/post/delpost",
+        url: "https://rishik04.herokuapp.com/post/delpost",
         data: {
           postid: id,
         },
@@ -121,7 +121,7 @@
 
       $.ajax({
         method: "post",
-        url: "/post/addcomment",
+        url: "https://rishik04.herokuapp.com/post/addcomment",
         data: formData.serialize(),
         success: (e) => {
           let addComment = newComment(e.data);
@@ -158,7 +158,7 @@
       e.preventDefault();
 
       $.ajax({
-        url: "/search/query",
+        url: "https://rishik04.herokuapp.com/search/query",
         method: "post",
         data: $("#search-form-query").serialize(),
         success: (e) => {
@@ -209,7 +209,7 @@
             _id: id
         }
         $.ajax({
-            url: '/profile/connect',
+            url: 'https://rishik04.herokuapp.com/profile/connect',
             method: 'post',
             data: data,
             success: (e)=>{
