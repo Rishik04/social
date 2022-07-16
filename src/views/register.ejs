@@ -26,7 +26,7 @@
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit minus
                   sed pariatur.
                 </p>
-                <form action="#" method="POST" id="form">
+                <form method="POST" id="form">
                 <div class="form-group mt-2">
                   <input
                     type="name"
@@ -99,25 +99,18 @@ $(document).ready(function(){
     method:"post",
     url:'/user/register',
     data:data,
-    success:function(res){
-      var response=JSON.parse(res);
+    success:function(response){
       console.log(response);
-      if(response.status==0){
+      if(response.status!=200){
         $('body').addClass('animateLogin');
         $('.card').addClass("active");
-        setTimeout(function(){
-          $('body').removeClass('animateLogin');
-          $('.card').removeClass("active");
-        },1000);
-        $('#emsg').html(response.msg).css({"background-color":"red"});
+        $('#emsg').html(response.message).css({"background-color":"red"});
+        console.log(response)
       }
       else{
-        $('#emsg').html(response.msg).css({"background-color":"green"});
+        $('#emsg').html(response.message).css({"background-color":"green"});
+        console.log(response)
         $('body').css({"background-color":"green"})
-        setTimeout(function(){
-          window.location.href="index.html";
-        },2500);
-       
       }
     }
   });
