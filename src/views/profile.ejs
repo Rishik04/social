@@ -5,8 +5,8 @@
         <div class="row justify-content-around">
             <div class="col-lg-5">
                 <div class="profile_data">
-                    <img src="<%= profile %>" alt="profile_photo" class="img-fluid">
-                    <h6 class="py-2 mt-3 pt-3"><%= allpost[0].user.name %></h6>
+                    <img src="<%= profile.profile %>" alt="profile_photo" class="img-fluid">
+                    <h6 class="py-2 mt-3 pt-3"><%= locals.name %></h6>
                     <p>Profile Bio</p>
                 </div>
             </div>
@@ -15,11 +15,10 @@
                     <ul class="list-unstyled">
                         <li>Posts</li>
                         <li>Friends</li>
-                        <% if(allpost[0].user._id!=locals.user) { %>
-                            <% if(friends.includes(allpost[0].user._id)) { %>
+                        <% if(profile._id.toString()!=locals.user) { %>
+                            <% if(friends.includes( allpost[0].user._id)) { %>
                               <button type="submit" class="px-3 connect" id="connect-<%= allpost[0].user._id %>">Connected</button>
                             <% } else { %>
-
                                 <button type="submit" class="px-3 connect" id="connect-<%= allpost[0].user._id %>">Connect</button>
                             <% } %>
                             

@@ -19,7 +19,6 @@ export const Getprofile = async(req, res)=>{
 
         const friends = await userModel.findOne({_id: jsonwebtoken.decode(req.cookies.access_token)._id})
 
-        // console.log(friends.friends)
 
         const findpost = await postModel.find({user: finduser._id}).populate('user', 'name').populate({
             path: 'comments',
@@ -27,7 +26,14 @@ export const Getprofile = async(req, res)=>{
                 path: 'user'
             }
         });
-        return res.render('profile', {title: "Profile", allpost: findpost, profile: finduser.profile, friends: friends.friends})
+        if(findpost)
+        {
+            return res.render('profile', {title: "Profile", allpost: findpost, profile: finduser, friends: friends.friends})
+        }
+        else{
+            return res.render('profile', {title: "Profile", allpost: 0, profile: finduser, friends: friends.friends})
+        }
+        
     }
     else{
         return res.redirect('back');

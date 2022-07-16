@@ -96,7 +96,7 @@
 
       $.ajax({
         method: "post",
-        url: "post/delpost",
+        url: "http://127.0.0.1:3000/post/delpost",
         data: {
           postid: id,
         },
@@ -126,6 +126,7 @@
         success: (e) => {
           let addComment = newComment(e.data);
           $(`#post-${e.data.posts} .comment>ul`).prepend(addComment);
+          $(`.comcount-${e.data.posts}`).html(e.length)
         },
         error: (err) => {
           console.log(err);

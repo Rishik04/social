@@ -23,8 +23,8 @@ export const addComment = async(req, res)=>{
 
                 if(req.xhr)
                 {
-                    const addcomnew= await addcom.populate('user', 'name');
-                   return successResponse(addcom, "Comment added", res);
+                    await addcom.populate('user', 'name');
+                   return res.send({data: addcom, length: len, message: "Successfully added"});
                 }
             }
         }

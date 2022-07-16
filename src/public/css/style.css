@@ -36,7 +36,7 @@ body {
     transform: rotate(-3deg);
   }
 }
-#login #login .card .detail {
+#login .card .detail {
   outline: none;
   border: none;
   width: 20rem;
@@ -44,7 +44,7 @@ body {
   height: 2.5rem;
 }
 
-#login #login .card::before {
+#login .card::before {
   position: absolute;
   content: "";
   top: 0;
@@ -60,16 +60,16 @@ body {
   clip-path: polygon(100% 0, 0 0, 0 100%);
 }
 
-#login #login .card > * {
+#login .card > * {
   z-index: 2;
 }
 
-#login #login .card h2 {
+#login .card h2 {
   color: white;
   font-weight: 800;
 }
 
-#login #login .card .content_left {
+#login .card .content_left {
   color: white;
   text-align: left;
   padding: 1rem 1.5rem;
@@ -77,15 +77,15 @@ body {
   padding-right: 80px;
 }
 
-#login #login .content_right {
+#login .content_right {
   padding: 1rem 2rem;
 }
 
-#login #login .card a {
+#login .card a {
   text-decoration: none;
 }
 
-#login #login .card .btn {
+#login .card .btn {
   position: relative;
   background-color: orangered;
   color: white;
@@ -97,27 +97,27 @@ body {
   box-shadow: 0 3px 2px rgba(0, 0, 0, 0.2);
 }
 
-#login #login .card h1 {
+#login .card h1 {
   color: darkorange;
   font-weight: 800;
 }
 
-#login #login .btn:hover {
+#login .btn:hover {
   background-color: orange;
 }
 
-#login #login .login_1 {
+#login .login_1 {
   position: relative;
   bottom: -9rem;
 }
 
-#login #login .login_1 i {
+#login .login_1 i {
   color: rgb(31, 69, 252);
   font-size: 26px;
   transition: transform 0.4s;
 }
 
-#login #login .login_1 i:hover {
+#login .login_1 i:hover {
   color: rgb(71, 109, 255);
   transform: scale(0.8);
 }
